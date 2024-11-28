@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from sqlalchemy.orm import sessionmaker
+from api.workflow.card.router import cardRouter
 
 from db.mysql import engineconn
 from model.workflow import Workflow
@@ -8,6 +8,8 @@ workflowRouter = APIRouter(
     prefix="/workflow",
     tags=["workflow"]
 )
+
+workflowRouter.include_router(cardRouter)
 
 engine = engineconn()
 session = engine.sessionmaker()
