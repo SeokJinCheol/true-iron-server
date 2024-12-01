@@ -22,13 +22,3 @@ async def get_workflow():
             "title": example,
         }
     ]
-
-
-
-@workflowRouter.post("/getWorkflowList2")
-async def get_workflow():
-    return [
-        {
-            "title": "test",
-        }
-    ]
