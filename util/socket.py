@@ -13,17 +13,20 @@ sio_app = socketio.ASGIApp(
     socketio_path='/ws/socket.io'
 )
 
+@sio_server.on('join')
+async def join(sid, data):
+    print(f'{sid} :: {data}')
+    await sio_server.enter_room(sid, data['room'])
+
 @sio_server.on('connect')
 async def connect(sid, environ, auth):
     print(f'{sid}: connected')
 
 @sio_server.on('message')
 async def message(sid, data):
-    await sio_server.send({
-        "user": data['user'],
-        "text": data['text'],
-        "timestamp": datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    })
+    room = data.get('room')
+    message = data.get('message')
+    await sio_server.send(message, room)
 
 @sio_server.on('disconnect')
 async def disconnect(sid):
