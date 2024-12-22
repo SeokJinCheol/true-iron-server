@@ -1,7 +1,4 @@
-from datetime import time
-
 import socketio
-import datetime
 
 sio_server = socketio.AsyncServer(
     async_mode = 'asgi',
